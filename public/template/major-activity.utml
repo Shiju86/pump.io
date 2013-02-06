@@ -9,6 +9,10 @@
   </a>
   <% } %>
   <div class="media-body">
+    <% if ((activity.verb == "post" || activity.verb == "create") && 
+           user && activity.actor && user.profile.id == activity.actor.id) { %>
+    <button type="button" class="close" id="delete-object" data-title="Delete">&times;</button>
+    <% } %>
     <% if (activity.object.displayName) { %>
     <h4 class="media-heading"><%- activity.object.displayName %></h4>
     <% } %>
