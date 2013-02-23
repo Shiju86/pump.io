@@ -1414,6 +1414,11 @@
                     object: view.model.toJSON()
                 };
 
+            if (!Pump.principal) {
+                Pump.gotoLogin();
+                return;
+            }
+
             Pump.newMinorActivity(act, function(err, act) {
                 if (err) {
                     view.showError(err);

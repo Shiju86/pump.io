@@ -527,4 +527,10 @@ if (!window.Pump) {
         });
     };
 
+    Pump.gotoLogin = function() {
+        var continueTo = window.location.pathname;
+
+        Pump.router.navigate("/main/login?continue="+encodeURIComponent(continueTo), true);
+    };
+
 })(window._, window.$, window.Backbone, window.Pump);
