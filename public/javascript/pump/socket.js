@@ -41,7 +41,11 @@
         var streams = Pump.getStreams();
         
         _.each(streams, function(stream, name) {
-            stream.getPrev();
+            stream.getPrev(function(err, data) {
+                _.each(data.items, function(activity) {
+                    Pump.updateReplies(Pump.Activity.unique(activity));
+                });
+            });
         });
     };
 
@@ -53,6 +57,16 @@
         if (target) {
             act = Pump.Activity.unique(activity);
             target.items.unshift(act);
+            Pump.updateReplies(act);
+        }
+    };
+
+    Pump.updateReplies = function(activity) {
+        if (activity.object &&
+            activity.object.inReplyTo &&
+            activity.object.inReplyTo.replies &&
+            activity.object.inReplyTo.replies.items) {
+            activity.object.inReplyTo.replies.items.add(activity);
         }
     };
 
