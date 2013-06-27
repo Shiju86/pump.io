@@ -147,8 +147,10 @@ suite.addBatch({
                                 verb: "post",
                                 object: {
                                     objectType: "image",
-                                    url: "http://photos.example/1",
-                                    summary: "New Parliament Buildings."
+                                    summary: "New Parliament Buildings.",
+                                    image: {
+                                        url: "http://photos.example/1.jpg"
+                                    }
                                 }
                             };
                             httputil.postJSON("http://localhost:4815/api/user/mackenzie/feed", cred1, act, this);

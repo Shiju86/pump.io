@@ -54,7 +54,6 @@ var testSchema = {
 var testData = {
     "create": {
         displayName: "Merry Christmas!",
-        url: "http://example.com/2014/12/25/merry-christmas",
         content: "Merry Christmas to all and to all a good night."
     },
     "update": {

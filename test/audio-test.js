@@ -56,7 +56,6 @@ var testSchema = {
 var testData = {
     "create": {
         displayName: "Shake Your Rump",
-        url: "http://example.com/beastie-boys/pauls-boutique/2",
         stream: {
             url: "http://example.com/beastie-boys/pauls-boutique/shake-your-rump.ogg",
             duration: 388

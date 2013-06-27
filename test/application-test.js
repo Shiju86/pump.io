@@ -52,7 +52,6 @@ var testSchema = {
 var testData = {
     "create": {
         displayName: "Microsoft Word",
-        url: "http://office.microsoft.com/word/",
         summary: "Popular word-processing program"
     },
     "update": {

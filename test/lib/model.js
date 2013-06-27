@@ -35,7 +35,7 @@ var modelBatch = function(typeName, className, testSchema, testData) {
     var batch = {};
     var typeKey = "When we require the "+typeName+" module";
     var classKey = "and we get its "+className+" class export";
-    var instKey;
+    var instKey, remoteKey;
 
     if ("aeiouAEIOU".indexOf(typeName.charAt(0)) !== -1) {
         instKey = "and we create an "+typeName+" instance";
@@ -202,6 +202,44 @@ var modelBatch = function(typeName, className, testSchema, testData) {
             }
         }
     };
+
+    if (testData.remote) {
+
+        remoteKey = "and we create a remote "+typeName+" instance";
+
+        batch[typeKey][classKey][remoteKey] = {
+            topic: function(Cls) {
+                Cls.create(testData.remote, this.callback);
+            },
+            "it works correctly": function(err, created) {
+                assert.ifError(err);
+                assert.isObject(created);
+            },
+            "remote auto-generated fields are there": function(err, created) {
+                assert.isString(created.objectType);
+                assert.equal(created.objectType, typeName);
+                assert.isString(created.id);
+            },
+            "local auto-generated fields are not there": function(err, created) {
+                assert.isUndefined(created._uuid);
+                assert.isUndefined(created.published);
+                assert.isUndefined(created.updated); // required for new object?
+            },
+            "passed-in fields are there": function(err, created) {
+                var prop, aprop;
+                for (prop in testData.remote) {
+                    // Author may have auto-created properties
+                    if (_.contains(["author", "inReplyTo"], prop)) {
+                        _.each(testData.remote[prop], function(value, key) {
+                            assert.deepEqual(created[prop][key], value);
+                        });
+                    } else {
+                        assert.deepEqual(created[prop], testData.remote[prop]);
+                    }
+                }
+            }
+        };
+    }
 
     return batch;
 };

@@ -54,7 +54,6 @@ var testSchema = {
 var testData = {
     "create": {
         displayName: "Gmail",
-        url: "http://mail.google.com/",
         summary: "Web-based email."
     },
     "update": {

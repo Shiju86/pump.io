@@ -62,8 +62,7 @@ var testData = {
             region: "Texas",
             postalCode: "78704",
             country: "USA"
-        },
-        url: "http://nominatim.openstreetmap.org/details.php?place_id=9576945"
+        }
     },
     "update": {
         displayName: "Torchy's Tacos on South 1st"

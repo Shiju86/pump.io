@@ -55,8 +55,7 @@ var testSchema = {
 var testData = {
     "create": {
         displayName: "pump.io",
-        summary: "DUH what it sounds like LOL",
-        url: "http://pump.io.org/"
+        summary: "DUH what it sounds like LOL"
     },
     "update": {
         summary: "Network infrastructure for social tools."

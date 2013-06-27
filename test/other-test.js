@@ -54,8 +54,7 @@ var testSchema = {
 var testData = {
     "create": {
         objectType: "http://schema.example/type/island/inhabitant",
-        displayName: "Ricardo",
-        url: "http://island.example/others/richardus"
+        displayName: "Ricardo"
     },
     "update": {
         displayName: "Richard Alpert"

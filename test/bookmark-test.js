@@ -55,7 +55,6 @@ var testSchema = {
 var testData = {
     "create": {
         displayName: "Google Home Page",
-        url: "http://example.com/bookmark/google-home-page",
         content: "Main search page for Google",
         image: {
             url: "http://example.com/images/bookmarks/google-home-page",

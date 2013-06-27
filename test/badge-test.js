@@ -54,7 +54,6 @@ var testSchema = {
 var testData = {
     "create": {
         displayName: "Unit TestX0r",
-        url: "http://example.com/badge/unit-testx0r",
         summary: "Ran 3 or more unit tests, automatically!",
         image: {
             url: "http://example.com/images/badges/unit-testx0r",

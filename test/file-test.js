@@ -58,8 +58,7 @@ var testData = {
     "create": {
         displayName: "2012 Q1 Sales",
         fileUrl: "http://example.com/files/2012-q1-sales.xls",
-        mimeType: "application/vnd.ms-excel",
-        url: "http://example.com/pages/2012-q1-sales"
+        mimeType: "application/vnd.ms-excel"
     },
     "update": {
         displayName: "2012 Q1 Sales (Revised)"

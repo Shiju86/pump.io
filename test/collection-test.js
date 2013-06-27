@@ -55,7 +55,6 @@ var testSchema = {
 var testData = {
     "create": {
         displayName: "Vacation 2011",
-        url: "http://example.com/collection/photos/vacation-2011",
         image: {
             url: "http://example.com/images/collections/vacation-2011.jpg",
             height: 140,

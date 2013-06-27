@@ -52,8 +52,12 @@ var testSchema = {
 var testData = {
     "create": {
         displayName: "General Motors",
-        url: "http://www.gm.com/",
         summary: "Great big car company"
+    },
+    "remote": {
+        displayName: "Ford Motors",
+        summary: "Great big car company",
+        url: "http://ford.com/"
     },
     "update": {
         summary: "Great big car and truck company"

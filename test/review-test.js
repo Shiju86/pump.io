@@ -56,7 +56,6 @@ var testData = {
     "create": {
         displayName: "My review of your blog",
         content: "I hate your blog. It's incredibly terrible and bad.",
-        url: "http://example.com/reviews/i-hate-your-blog",
         rating: 0.5
     },
     "update": {

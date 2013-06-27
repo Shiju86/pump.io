@@ -60,7 +60,6 @@ var testSchema = {
 var testData = {
     "create": {
         displayName: "Federation Hackfest 2012",
-        url: "http://example.com/event/federation-hackfest-2012",
         summary: "Come hack with us!",
         location: {
             displayName: "Empire State Building",

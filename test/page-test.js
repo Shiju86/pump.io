@@ -54,7 +54,6 @@ var testSchema = {
 var testData = {
     "create": {
         displayName: "Evan Prodromou",
-        url: "http://www.facebook.com/evan.prodromou",
         summary: "Founder and CTO of E14N https://e14n.com/"
     },
     "update": {

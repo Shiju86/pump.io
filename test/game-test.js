@@ -52,7 +52,6 @@ var testSchema = {
 var testData = {
     "create": {
         displayName: "Illuminati",
-        url: "http://www.sjgames.com/illuminati/",
         summary: "Best card game ever"
     },
     "update": {

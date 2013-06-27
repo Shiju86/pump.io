@@ -66,8 +66,7 @@ var testData = {
             duration: 77,
             width: 320,
             height: 480
-        },
-        url: "http://example.com/videos/watch-me-dunk-a-basketball.html"
+        }
     },
     "update": {
         displayName: "Watch me almost dunk a basketball",
