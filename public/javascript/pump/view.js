@@ -1371,7 +1371,8 @@
                 activity = view.model,
                 principal = Pump.principal;
 
-            if (principal && activity.actor && principal.id == activity.actor.id && activity.get("verb") == "post") {
+            if (principal && activity.actor && principal.id == activity.actor.id &&
+                (activity.get("verb") == "post" || activity.get("verb") == "create")) {
                 if (!view.extraMenu) {
                     view.extraMenu = new Pump.ExtraMenu({model: activity.object, parent: view});
                     view.extraMenu.show();
