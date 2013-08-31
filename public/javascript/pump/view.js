@@ -1352,7 +1352,7 @@
             "click .share": "shareObject",
             "click .unshare": "unshareObject",
             "click .comment": "openComment",
-            "click .object-image": "openImage",
+            "click .object-image": "openImage"
         },
         setupSubs: function() {
             var view = this,
@@ -1371,7 +1371,7 @@
                 activity = view.model,
                 principal = Pump.principal;
 
-            if (principal && activity.actor && principal.id == activity.actor.id) {
+            if (principal && activity.actor && principal.id == activity.actor.id && activity.get("verb") == "post") {
                 if (!view.extraMenu) {
                     view.extraMenu = new Pump.ExtraMenu({model: activity.object, parent: view});
                     view.extraMenu.show();
@@ -1383,11 +1383,9 @@
                 activity = view.model,
                 principal = Pump.principal;
 
-            if (principal && activity.actor && principal.id == activity.actor.id) {
-                if (view.extraMenu) {
-                    view.extraMenu.hide();
-                    view.extraMenu = null;
-                }
+            if (view.extraMenu) {
+                view.extraMenu.hide();
+                view.extraMenu = null;
             }
         },
         favoriteObject: function() {
@@ -3343,7 +3341,8 @@
         parent: null,
         templateName: "extra-menu",
         events: {
-            "click .delete-object": "deleteObject"
+            "click .delete-object": "deleteObject",
+            "click .edit-object": "editObject"
         },
         initialize: function(options) {
             var view = this;
@@ -3392,6 +3391,20 @@
                     });
                 }
             });
+        },
+        editObject: function() {
+            var view = this,
+                model = view.model;
+
+            // Hide the dropdown, since we were selected
+            view.$el.dropdown('toggle');
+
+            switch (model.get('objectType')) {
+            case 'note':
+                break;
+            default:
+                break;
+            }
         }
     });
 
