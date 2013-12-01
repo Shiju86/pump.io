@@ -207,6 +207,87 @@ suite.addBatch({
                                     return item.id == shareAct.id;
                                 }));
                             }
+                        },
+                        "and we check the minor inbox of the sharer's follower that doesn't follow the poster": {
+                            topic: function(shareAct, postAct, followActs, creds) {
+                                var callback = this.callback,
+                                    getMinorInbox = function(nickname, callback) {
+                                        var url = "http://localhost:4815/api/user/"+nickname+"/inbox/minor";
+                                        httputil.getJSON(url, creds[nickname], function(err, feed, response) {
+                                            callback(err, feed);
+                                        });
+                                    };
+
+                                Step(
+                                    function() {
+                                        getMinorInbox("goofy", this);
+                                    },
+                                    function(err, feed) {
+                                        callback(err, shareAct, feed);
+                                    }
+                                );
+                            },
+                            "it does not contain the share activity": function(err, shareAct, feed) {
+                                assert.ifError(err);
+                                validFeed(feed);
+                                assert.isFalse(_.some(feed.items, function(item) {
+                                    return item.id == shareAct.id;
+                                }));
+                            }
+                        },
+                        "and we check the major inbox of the sharer's follower that follows the poster": {
+                            topic: function(shareAct, postAct, followActs, creds) {
+                                var callback = this.callback,
+                                    getMajorInbox = function(nickname, callback) {
+                                        var url = "http://localhost:4815/api/user/"+nickname+"/inbox/major";
+                                        httputil.getJSON(url, creds[nickname], function(err, feed, response) {
+                                            callback(err, feed);
+                                        });
+                                    };
+
+                                Step(
+                                    function() {
+                                        getMajorInbox("donald", this);
+                                    },
+                                    function(err, feed) {
+                                        callback(err, shareAct, feed);
+                                    }
+                                );
+                            },
+                            "it does not contain the share activity": function(err, shareAct, feed) {
+                                assert.ifError(err);
+                                validFeed(feed);
+                                assert.isFalse(_.some(feed.items, function(item) {
+                                    return item.id == shareAct.id;
+                                }));
+                            }
+                        },
+                        "and we check the minor inbox of the sharer's follower that follows the poster": {
+                            topic: function(shareAct, postAct, followActs, creds) {
+                                var callback = this.callback,
+                                    getMinorInbox = function(nickname, callback) {
+                                        var url = "http://localhost:4815/api/user/"+nickname+"/inbox/minor";
+                                        httputil.getJSON(url, creds[nickname], function(err, feed, response) {
+                                            callback(err, feed);
+                                        });
+                                    };
+
+                                Step(
+                                    function() {
+                                        getMinorInbox("donald", this);
+                                    },
+                                    function(err, feed) {
+                                        callback(err, shareAct, feed);
+                                    }
+                                );
+                            },
+                            "it does contains the share activity": function(err, shareAct, feed) {
+                                assert.ifError(err);
+                                validFeed(feed);
+                                assert.isTrue(_.some(feed.items, function(item) {
+                                    return item.id == shareAct.id;
+                                }));
+                            }
                         }
                     }
                 }
