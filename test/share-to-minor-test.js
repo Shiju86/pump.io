@@ -29,7 +29,8 @@ var assert = require("assert"),
     setupApp = oauthutil.setupApp,
     newCredentials = oauthutil.newCredentials,
     validCredentials = actutil.validCredentials,
-    validActivity = actutil.validActivity;
+    validActivity = actutil.validActivity,
+    validFeed = actutil.validFeed;
 
 var suite = vows.describe("Share to minor test");
 
@@ -112,6 +113,102 @@ suite.addBatch({
                     _.each(acts, function(act) {
                         validActivity(act);
                     });
+                },
+                "and one posts a note": {
+                    topic: function(follows, creds) {
+                        var callback = this.callback,
+                            url = "http://localhost:4815/api/user/minnie/feed",
+                            act = {
+                                verb: "post",
+                                object: {
+                                    objectType: "note",
+                                    content: "Hello, world."
+                                }
+                            };
+                        httputil.postJSON(url, creds.minnie, act, function(err, act, response) {
+                            callback(err, act);
+                        });
+                    },
+                    "it works": function(err, act) {
+                        assert.ifError(err);
+                        validActivity(act);
+                    },
+                    "and another shares it": {
+                        topic: function(postAct, follows, creds) {
+                            var callback = this.callback,
+                                url = "http://localhost:4815/api/user/mickey/feed",
+                                act = {
+                                    verb: "share",
+                                    object: postAct.object
+                                };
+                            httputil.postJSON(url, creds.mickey, act, function(err, act, response) {
+                                callback(err, act);
+                            });
+                        },
+                        "it works": function(err, shareAct) {
+                            assert.ifError(err);
+                            validActivity(shareAct);
+                        },
+                        "and we check the inboxes of the sharer's followers": {
+                            topic: function(shareAct, postAct, followActs, creds) {
+                                var callback = this.callback,
+                                    getInbox = function(nickname, callback) {
+                                        var url = "http://localhost:4815/api/user/"+nickname+"/inbox";
+                                        httputil.getJSON(url, creds[nickname], function(err, feed, response) {
+                                            callback(err, feed);
+                                        });
+                                    };
+
+                                Step(
+                                    function() {
+                                        var group = this.group();
+                                        getInbox("goofy", group());
+                                        getInbox("donald", group());
+                                    },
+                                    function(err, feeds) {
+                                        callback(err, shareAct, feeds);
+                                    }
+                                );
+                            },
+                            "they contain the share activity": function(err, shareAct, feeds) {
+                                assert.ifError(err);
+                                validFeed(feeds[0]);
+                                validFeed(feeds[1]);
+                                _.each(feeds, function(feed) {
+                                    assert.ok(_.some(feed.items, function(item) {
+                                        return item.id == shareAct.id;
+                                    }));
+                                });
+                            }
+                        },
+                        "and we check the major inbox of the sharer's follower that doesn't follow the poster": {
+                            topic: function(shareAct, postAct, followActs, creds) {
+                                var callback = this.callback,
+                                    getMajorInbox = function(nickname, callback) {
+                                        var url = "http://localhost:4815/api/user/"+nickname+"/inbox/major";
+                                        httputil.getJSON(url, creds[nickname], function(err, feed, response) {
+                                            callback(err, feed);
+                                        });
+                                    };
+
+                                Step(
+                                    function() {
+                                        getMajorInbox("goofy", this);
+                                    },
+                                    function(err, feed) {
+                                        callback(err, shareAct, feed);
+                                    }
+                                );
+                            },
+                            "it contains the share activity": function(err, shareAct, feed) {
+                                assert.ifError(err);
+                                validFeed(feed);
+                                assert.ok(_.some(feed.items, function(item) {
+                                    return item.id == shareAct.id;
+                                }));
+                            }
+                        }
+                    }
                 }
             }
         }
