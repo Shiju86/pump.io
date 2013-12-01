@@ -136,8 +136,17 @@ var validUser = function(user) {
     validActivityObject(user.profile);
 };
 
+var validCredentials = function(creds) {
+    assert.isObject(creds);
+    assert.isString(creds.consumer_key);
+    assert.isString(creds.consumer_secret);
+    assert.isString(creds.token);
+    assert.isString(creds.token_secret);
+};
+
 exports.validActivity       = validActivity;
 exports.validActivityObject = validActivityObject;
 exports.validMediaLink      = validMediaLink;
 exports.validFeed           = validFeed;
 exports.validUser           = validUser;
+exports.validCredentials    = validCredentials;
